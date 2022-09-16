@@ -111,5 +111,5 @@ cp -t ${efi_path} /usr/share/shim-signed/{shim,mm}x64.efi
 cp $mok_cer ${efi_path}
 # update boot to use shim
 echo "adding secure boot entry..."
-efibootmgr --create --disk $(findmnt /efi -o SOURCE | grep "/dev") --loader ${efi_path}shimx64.efi --label "$bootloader_id (Secure Boot)"
+efibootmgr --create --disk $(findmnt /efi -o SOURCE | grep "/dev") --loader /EFI/${bootloader_id}/shimx64.efi --label "$bootloader_id (Secure Boot)"
 echo "done! make sure to run sign-kernels"
