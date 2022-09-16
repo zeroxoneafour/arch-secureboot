@@ -1,6 +1,11 @@
 #!/bin/bash
 conf="/etc/secureboot.conf"
-[ -f $conf ] && source $conf || echo "conf not found at $conf"; exit 1;
+if [ -f $conf ]; then 
+	source $conf
+else
+	echo "conf not found at $conf"
+	exit 1
+fi
 
 # copied from Ubuntu
 CD_MODULES="
