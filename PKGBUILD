@@ -28,5 +28,5 @@ package() {
 	for mok_file in $(ls | grep "MOK"); do
 		install -D -m644 "$mok_file" "$pkgdir/usr/share/$_pkgname/$mok_file"
 	done
-	install -D -m644 "91-sign-kernels.hook" "$pkgdir/usr/share/libalpm/hooks/91-sign_kernels.hook"
+	install -D -m644 "91-sign-kernels.hook" "$pkgdir/usr/share/libalpm/hooks/91-sign-kernels.hook"
 }
