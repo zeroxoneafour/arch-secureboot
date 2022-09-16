@@ -25,7 +25,8 @@ package() {
 	install -D -m755 "secure-grub-install.sh" "$pkgdir/usr/bin/secure-grub-install"
 	install -D -m755 "sign-kernels.sh" "$pkgdir/usr/bin/sign-kernels"
 	install -D -m755 "secureboot.conf" "$pkgdir/etc/secureboot.conf"
-	for $mok_file in $(ls | grep "MOK"); do
+	for mok_file in $(ls | grep "MOK"); do
 		install -D -m644 "$mok_file" "$pkgdir/usr/share/$_pkgname/$mok_file"
 	done
+	install -D -m644 "91-sign-kernels.hook" "$pkgdir/usr/share/libalpm/hooks/91-sign_kernels.hook"
 }
