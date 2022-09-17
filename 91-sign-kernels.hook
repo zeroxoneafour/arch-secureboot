@@ -1,16 +1,12 @@
 [Trigger]
 Operation = Install
 Operation = Upgrade
-Type = Package
-Target = linux
-Target = linux-lts
-Target = linux-hardened
-Target = linux-zen
+Type = Path
+Target = */vmlinuz
 
 [Action]
-Description = Signing kernel with Machine Owner Key for Secure Boot
+Description = Signing kernel with Machine Owner Key for Secure Boot...
 When = PostTransaction
 Exec = /usr/bin/bash /usr/bin/sign-kernels
 Depends = sbsigntools
-Depends = findutils
 Depends = grep
