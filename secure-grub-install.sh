@@ -112,8 +112,14 @@ cp $mok_cer ${efi_path}
 echo "signing grub..."
 sbsign --key $mok_key --cert $mok_crt --output ${efi_path}grubx64.efi ${efi_path}grubx64.efi
 # update boot to use shim
-echo "adding secure boot entry..."
-efibootmgr --create --disk $(findmnt $esp -o SOURCE | grep "/dev") --loader /EFI/${bootloader_id}/shimx64.efi --label "$bootloader_id (Secure Boot)"
+current_bootloader="$(efibootmgr | grep "$bootloader_id (Secure Boot)" )"
+shim_path="$(echo "\\\efi\\$bootloader_id\shimx64.efi" | tr "[:lower:]" "[:upper:]")"
+if [ -z "$(echo $current_bootloader | grep -F "$shim_path")" ]; then
+	echo "boot entry already exists, not adding another"
+else
+	echo "adding secure boot entry..."
+	efibootmgr --create --disk $(findmnt $esp -o SOURCE | grep "/dev") --loader "$shim_path" --label "$bootloader_id (Secure Boot)"
+fi
 echo "signing kernels..."
 sign-kernels
 echo "done!"
